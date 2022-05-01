@@ -5,7 +5,7 @@ import ContactList from "./ContactList";
 import Filter from "./Filter";
 import { addContact,changeFilter,deleteContact } from '../redux/slice';
 
-
+//template
 
 function App() {  
   const dispatch = useDispatch();
