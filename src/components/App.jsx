@@ -1,46 +1,26 @@
-import { useDispatch,useSelector } from "react-redux";
+import { useState } from "react";
 import PropTypes from 'prop-types';
 import Form from './Form';
 import ContactList from "./ContactList";
 import Filter from "./Filter";
-import { addContact,changeFilter,deleteContact } from '../redux/slice';
 
-//template
 
-function App() {  
-  const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts.items);
-  const filter = useSelector(state => state.contacts.filter);
-  const onDeleteContact = name => dispatch(deleteContact(name));
+
+function App() {
+ 
+  const [filter, setFilter] = useState('');
   
-  const formSubmitHandler = data => {   
-
-    if (contacts.find(contact => contact.name.toLowerCase() === data.name.toLowerCase())) {
-      alert(`${data.name} is already in contacts`);
-      return;
-    };
-    
-    dispatch(addContact(data));
-    
+  const changeFilter = event => {
+    setFilter(event.currentTarget.value);
   };
-
-  const changerFilter = event => {
-    dispatch(changeFilter(event.currentTarget.value));     
-   };
-
-  
-  const normalizedFilter = filter.toLocaleLowerCase();
-  const filtredContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(normalizedFilter),
-  );
 
     return (
       <div>     
         <h1>Phonebook</h1>
-        <Form onSubmit={formSubmitHandler}/>        
+        <Form />        
         <h2>Contacts</h2>
-        <Filter value={filter} onChange={changerFilter}/>
-        <ContactList filtredContacts={filtredContacts} onDeleteContact={onDeleteContact}/>
+        <Filter value={filter} onChange={changeFilter}/>        
+        <ContactList filter={filter}/>
       </div>
     )
 };
