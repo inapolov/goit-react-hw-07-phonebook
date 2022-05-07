@@ -1,12 +1,14 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import { useFetchContactsQuery } from '../../redux/slice';
+import { useSelector } from 'react-redux';
 import ContactItem from "components/ContactItem";
 
 
 
-function ContactList({ filter }) {
+function ContactList() {
     const { data: contacts, isFetching } = useFetchContactsQuery();
+    const filter = useSelector(state => state.filter.value)
 
     const getFiltredContacts = () => { 
     if (!contacts) {
